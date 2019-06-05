@@ -30,14 +30,21 @@ public class WelcomeController {
 	@Value("${application.message:Hello World}")
 	private String message = "Hello World";
 
-	@GetMapping("/")
+	@RequestMapping("/index")
+	public String index(Map<String, Object> model) {
+		model.put("time", new Date());
+		model.put("message", this.message);
+		return "forward:/WEB-INF/jsp/index.jsp";
+	}
+
+	@RequestMapping("")
 	public String welcome(Map<String, Object> model) {
 		model.put("time", new Date());
 		model.put("message", this.message);
-		return "welcome";
+		return "index";
 	}
 
-	@RequestMapping("/foo")
+	@RequestMapping("/fail")
 	public String foo(Map<String, Object> model) {
 		throw new RuntimeException("Foo");
 	}
